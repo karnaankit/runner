@@ -1,0 +1,28 @@
+name: Deploy Frontend to S3/CloudFront
+
+on:
+  push:
+    branches:
+      - frontend 
+
+jobs:
+  build_and_deploy:
+    runs-on: self-hosted 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          yarn
+          npm install
+
+      - name: Build project
+        run: yarn build
+
+      - name: Upload to S3
+        run: aws s3 cp --recursive ./build s3://frontend-ankit --delete
+
+      - name: Invalidate CloudFront distribution
+        run: aws cloudfront create-invalidation --distribution-id EW439PCCRFST9 --paths "/*"
