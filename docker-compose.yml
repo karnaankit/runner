@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16.2-alpine3.19
+    env_file:
+      - .env
+    volumes:
+        - data:/var/lib/postgresql/data
+
+  express:
+    build:
+      context: .
+      dockerfile: Dockerfile.express
+    ports:
+      - '5000:5000'
+    env_file:
+      - .env
+    command: >
+      sh -c "npm run migrate && node index.js"
+    depends_on:
+      - db
+
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - '80:80'
+    depends_on:
+      - express
+
+volumes:
+    data:
