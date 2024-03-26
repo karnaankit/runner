@@ -76,4 +76,4 @@ jobs:
           npm version patch -m "Increase backend version to %s"
           cd ..
           git commit -am "Increased version"
-          git push https://x-access-token:${PAT
+          git push https://x-access-token:${PAT}@github.com/${GITHUB_REPOSITORY}.git
