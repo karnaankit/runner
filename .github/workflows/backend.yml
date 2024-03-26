@@ -32,11 +32,14 @@ jobs:
         run: |
           git config --global user.name 'karnaankit'
           git config --global user.email 'karna.ankit1@gmail.com'
-          npm version patch --no-git-tag-version
-          git add package.json
-          git commit -m "Increase package.json version"
-          git push "https://${{ secrets.GIT_TOKEN }}@github.com/bibek65/karnaankit.git"
-          git push "git${{ secrets.GIT_TOKEN }}@github.com:karnaankit/karnaankit.git"
+          cd backend
+          npm version patch -m "Increase backend version to %s"
+          cd ..
+          npm version patch -m "Increase frontend version to %s"
+          cd ..
+          git commit -am "Increased version"
+          git push "https://${{ secrets.GIT_TOKEN }}@github.com/karnaankit/runner.git"
+          
   dev:
     name: DEV ENV
     runs-on: self-hosted
