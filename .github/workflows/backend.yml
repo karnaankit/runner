@@ -29,6 +29,8 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
 
       - name: Commit version increase
+        env:
+          PAT: ${{ secrets.GIT_TOKEN }}
         run: |
           git config --global user.name 'karnaankit'
           git config --global user.email 'karna.ankit1@gmail.com'
@@ -36,7 +38,7 @@ jobs:
           npm version patch -m "Increase backend version to %s"
           cd ..
           git commit -am "Increased version"
-          git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
+          git push https://x-access-token:${PAT}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
           
   dev:
     name: DEV ENV
