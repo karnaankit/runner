@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build and Push Docker image
         run: |
-          docker build Dockerfile.express -t karnaankit/repo-backend:stable -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
+          docker build -f Dockerfile.express -t karnaankit/repo-backend:stable -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
           docker push karnaankit/repo-backend:stable
           docker push karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA")
 
@@ -51,6 +51,6 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build and Push Docker image
         run: |
-          docker build -t karnaankit/repo-backend:dev -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
+          docker build -f Dockerfile.express -t karnaankit/repo-backend:dev -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
           docker push karnaankit/repo-backend:dev
           docker push karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA")
