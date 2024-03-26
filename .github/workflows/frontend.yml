@@ -24,7 +24,7 @@ jobs:
           npm run build
 
       - name: Upload to S3
-        run: aws s3 cp --recursive ./build s3://frontend-ankit --delete
+        run: aws s3 cp --recursive ./build s3://frontend-ankit
 
       - name: Invalidate CloudFront distribution
         run: aws cloudfront create-invalidation --distribution-id EW439PCCRFST9 --paths "/*"
