@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "20.x"
 
       - name: Install dependencies and build
         run: |
@@ -28,5 +28,17 @@ jobs:
           cd frontend
           aws s3 cp dist s3://frontend-ankit --recursive
 
-      - name: Invalidate CloudFront distribution
+      - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Commit version increase
+        env:
+          PAT: ${{ secrets.GIT_TOKEN }}
+        run: |
+          git config --global user.name 'karnaankit'
+          git config --global user.email 'karna.ankit1@gmail.com'
+          cd backend
+          npm version patch
+          cd ..
+          git commit -am "Increased version"
+          git push https://x-access-token:${PAT}@github.com/${GITHUB_REPOSITORY}.git
