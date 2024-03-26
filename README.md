@@ -1,3 +1,3 @@
 ## Description
 
-Directory for assignment code asdasd
+Directory for assignment code asd
