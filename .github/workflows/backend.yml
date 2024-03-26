@@ -35,8 +35,6 @@ jobs:
           cd backend
           npm version patch -m "Increase backend version to %s"
           cd ..
-          npm version patch -m "Increase frontend version to %s"
-          cd ..
           git commit -am "Increased version"
           git push "https://${{ secrets.GIT_TOKEN }}@github.com/karnaankit/runner.git"
           
