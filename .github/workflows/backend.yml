@@ -18,11 +18,9 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build and Push Docker image
         run: |
-          cd backend
-          docker build -t karnaankit/repo-backend:stable -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
+          docker build Dockerfile.express -t karnaankit/repo-backend:stable -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
           docker push karnaankit/repo-backend:stable
           docker push karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA")
-          cd ..
 
       - name: Commit version increase
         uses: actions/setup-node@v4
@@ -32,7 +30,6 @@ jobs:
 
       - name: Commit version increase
         run: |
-          cd backend
           git config --global user.name 'karnaankit'
           git config --global user.email 'karna.ankit1@gmail.com'
           npm version patch --no-git-tag-version
@@ -40,7 +37,6 @@ jobs:
           git commit -m "Increase package.json version"
           git push "https://${{ secrets.GIT_TOKEN }}@github.com/bibek65/karnaankit.git"
           git push "git${{ secrets.GIT_TOKEN }}@github.com:karnaankit/karnaankit.git"
-          cd ..
   dev:
     name: DEV ENV
     runs-on: self-hosted
@@ -55,8 +51,6 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build and Push Docker image
         run: |
-          cd backend
-          docker build -t karnaankit/repo-frontend:dev -t karnaankit/repo-frontend:$(git rev-parse --short "$GITHUB_SHA") .
-          docker push karnaankit/repo-frontend:dev
-          docker push karnaankit/repo-frontend:$(git rev-parse --short "$GITHUB_SHA")
-          cd ..
+          docker build -t karnaankit/repo-backend:dev -t karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA") .
+          docker push karnaankit/repo-backend:dev
+          docker push karnaankit/repo-backend:$(git rev-parse --short "$GITHUB_SHA")
