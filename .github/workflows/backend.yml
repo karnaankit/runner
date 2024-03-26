@@ -7,7 +7,7 @@ on:
 
 jobs:
   prod:
-    name: Prodd
+    name: Prod
     runs-on: self-hosted
     if: github.ref == 'refs/heads/main'
     steps:
