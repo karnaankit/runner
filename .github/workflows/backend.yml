@@ -1,4 +1,4 @@
-name: Backend image Build and Push
+name: Build backend image and push
 on:
   push:
     branches:
