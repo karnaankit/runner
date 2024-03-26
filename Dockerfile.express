@@ -1,7 +1,19 @@
-FROM node:21-alpine3.18
-WORKDIR /app/backend
-COPY ./backend/package*.json ./
-COPY ./backend/tsconfig.json ./
-RUN npm install
+FROM node:20.11.1-bookworm-slim AS base
+WORKDIR /src/backend
+COPY ./backend/package.json ./
+COPY ./backend/yarn.lock ./
+RUN yarn
 COPY ./backend .
+
+FROM base as builder
+WORKDIR /src/backend
+RUN yarn build
+
+FROM node:20.11.1-bookworm-slim
+WORKDIR /src/backend
+COPY ./backend/package.json ./
+COPY ./backend/yarn.lock ./
+RUN yarn install --prod
+COPY --from=builder src/backend/dist ./
 EXPOSE 3000
+
