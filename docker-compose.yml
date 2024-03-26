@@ -27,6 +27,7 @@ services:
       - '80:80'
       -testing
     depends_on:
+    asdnajksdnka
       - express
 
 volumes:
