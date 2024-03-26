@@ -17,13 +17,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
+      - name: Install dependencies and build
         run: |
           cd frontend
           npm install
-
-      - name: Build project
-        run: npm run build
+          npm run build
 
       - name: Upload to S3
         run: aws s3 cp --recursive ./build s3://frontend-ankit --delete
