@@ -26,7 +26,7 @@ jobs:
       - name: Upload to S3
         run: |
           cd frontend
-          aws s3 cp ./build/ s3://frontend-ankit
+          aws s3 cp dist s3://frontend-ankit --recursive
 
       - name: Invalidate CloudFront distribution
         run: aws cloudfront create-invalidation --distribution-id EW439PCCRFST9 --paths "/*"
