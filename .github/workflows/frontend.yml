@@ -12,14 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Install dependencies
         run: |
           cd frontend
-          yarn
           npm install
 
       - name: Build project
-        run: yarn build
+        run: npm run build
 
       - name: Upload to S3
         run: aws s3 cp --recursive ./build s3://frontend-ankit --delete
