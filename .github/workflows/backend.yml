@@ -36,7 +36,7 @@ jobs:
           npm version patch -m "Increase backend version to %s"
           cd ..
           git commit -am "Increased version"
-          git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/karnaankit/runner.git HEAD:main
+          git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
           
   dev:
     name: DEV ENV
